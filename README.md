@@ -6,10 +6,10 @@
   - https://github.com/BogiHsu/Tacotron2-PyTorch
 
 ## Pretrained weight
-### Tacotreon2 의 pretrained weight 출처
+#### 1. Tacotreon2 의 pretrained weight 출처
 - 영어
   - LJ Speech dataset 으로 학습: https://github.com/BogiHsu/Tacotron2-PyTorch
-### 영어와 한국어의 vocoder pretrained weight 출처
+#### 2. 영어와 한국어의 vocoder pretrained weight 출처
   - 영어: https://github.com/ming024/FastSpeech2
   - 한국어: https://github.com/HGU-DLLAB/Korean-FastSpeech2-Pytorch
 
