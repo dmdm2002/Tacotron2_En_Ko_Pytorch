@@ -21,7 +21,7 @@ class hparams:
     # Train                        #
     ################################
     is_cuda = torch.cuda.is_available()
-    pin_mem = True
+    pin_mem = False
     n_workers = 0
     prep = False
     pth = 'lj-22k.pkl'

@@ -1,0 +1,31 @@
+< train command >
+--language: 학습되길 원하는 언어 [ korean(ko) or english(en) ]
+--data_dir: directory to load data ( db에서 user_root )
+--log_dir: directory to save tensorboard logs (학습 경과에 대한 기록을 남기는 부분)
+--ckpt_dir: directory to save checkpoints
+--ckpt_pth: path to load checkpoints, 만약 없으면 비워둬 주세요
+ckpt_path 를 제외한 모든 hyper parameter는 누락없이 없어야합니다.
+
+data_dir 에는 wav파일의 경로와 text에 대한 정보가 pair하게 저장되어 있는 metadata.txt가 반드시 있어야하며 두 pair의 구분은 "|"로 됩니다. [metadata.txt 예시를 첨부]
+
+# 예시
+python train.py --language=korean --data_dir=./data/path --log_dir=./log/path --ckpt_dir=./ckpt/path'
+
+
+< inference command >
+--language: TTS langauge [ korean(ko) or english(en) ]
+--ckp_path 유저 목소리로 학습된 해당 언어 TTS 모델 checkpoint 가 저장된 경로
+--best_ckp_name: 학습된 해당 언어의 best score checkpoint 의 이름
+--output_path: 최종 output이 저장되는 경로
+--output_name: 최종 output 이름 (확장자까지 붙여서 작성해주세요) ex) sample.wav
+--text: voice로 출력되길 원하는 문장
+
+ckp_path + best_ckp_name = ckp full path 로 사용됩니다.
+ckp full path 가 만약 존재하지 않으면 각 언어어때라 설정된 sample voice 를 사용합니다.
+english 와 korean 모두 여성 목소리가 sample 입니다.
+output_path가 누락된 경우 현재 py파일이 존재하는 위치에 wav folder를 생성하여 그곳에 저장합니다.
+output_name이 누락된 경우 default로 "infer.wav" 라는 이름으로 저장됩니다.
+output sample rate => 22050
+
+# 예시
+python inference.py --language=korean --ckp_path=None --best_ckp_name=None.pth.tar --output_path=./wav/infer --output_name=sample.wav --text="오늘부터 뉴스룸 2부에서는 그날의 주요사항을 한마디의 단어로 축약해서 앵커브리핑으로 풀어보겠습니다"

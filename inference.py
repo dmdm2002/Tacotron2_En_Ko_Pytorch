@@ -97,13 +97,22 @@ if __name__ == '__main__':
     ckp_path = f'{args.ckp_path}/{args.best_ckp_name}'
     if os.path.exists(ckp_path):
         model = load_model(ckp_path, args.language, device)
-        output = infer(args.text, model, args.language)
+        model_dynamic_quantized = torch.quantization.quantize_dynamic(
+            model, qconfig_spec={torch.nn.Linear, torch.nn.Conv1d}, dtype=torch.qint8
+        )
+        output = infer(args.text, model_dynamic_quantized, args.language)
     else:
         model = load_model(sample_ckp_path, args.language, device)
-        output = infer(args.text, model, args.language)
+        model_dynamic_quantized = torch.quantization.quantize_dynamic(
+            model, qconfig_spec={torch.nn.Linear, torch.nn.Conv1d}, dtype=torch.qint8
+        )
+        output = infer(args.text, model_dynamic_quantized, args.language)
 
     vocoder = get_vocoder(vocoer_name, device)
-    wav = vocoder_infer(output[1], vocoder, vocoer_name)
+    vocoder_dynamic_quantized = torch.quantization.quantize_dynamic(
+        vocoder, qconfig_spec={torch.nn.Linear, torch.nn.ConvTranspose1d, torch.nn.Conv1d}, dtype=torch.qint8
+    )
+    wav = vocoder_infer(output[1], vocoder_dynamic_quantized, vocoer_name)
 
     # output path가 존재하지 않으면 생성
     os.makedirs(args.output_path, exist_ok=True)
@@ -111,3 +120,5 @@ if __name__ == '__main__':
     wavfile.write(path, hps.sample_rate, wav[0])
 
     print("Complete Inference !!!")
+
+    sys.exit()

@@ -1,0 +1,9 @@
+numpy==1.23
+matplotlib
+jamo
+unidecode
+inflect
+scipy
+librosa
+tensorboardX
+nltk

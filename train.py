@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import torch
 import argparse
@@ -181,3 +182,5 @@ if __name__ == '__main__':
     torch.backends.cudnn.benchmark = False
     train(args)
     print("Complete Training!!!")
+
+    sys.exit()
